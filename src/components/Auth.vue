@@ -76,7 +76,7 @@
              * -------------------------------------------------
              * */
             getUser() {
-                fetch(this.endpoint + 'users', {
+                fetch(this.endpoint + 'user', {
                     method: 'get',
                     headers: {
                         'content-type': 'application/json',
