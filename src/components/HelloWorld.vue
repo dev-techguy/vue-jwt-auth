@@ -1,58 +1,106 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div class="row">
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-8">
+            <h2 class="text-center">{{ msg }}</h2>
+            <form @submit.prevent="getAccessToken()" role="form">
+                <h4>Testing Bearer Token</h4>
+                <hr>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter E-mail Address" class="form-control"
+                           v-model="user.email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Email Address</label>
+                    <input type="password" id="password" placeholder="XXXXXXXX" class="form-control"
+                           v-model="user.password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-primary btn-block mb-2"><b>LOGIN</b></button>
+                </div>
+            </form>
+            <a href="#" class="btn btn-outline-success btn-block mb-2" @click="getUser()"><b>GET USER</b></a>
+        </div>
+        <div class="col-md-2">&nbsp;</div>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+    export default {
+        name: 'HelloWorld',
+        props: {
+            msg: String
+        },
+        data() {
+            return {
+                endpoint: 'http://b-sheria.dev-tooling.xyz/api/v1/',
+                user: {
+                    email: '',
+                    password: ''
+                }
+            }
+        },
+        methods: {
+            getAccessToken() {
+                fetch(this.endpoint + 'token', {
+                    method: 'post',
+                    body: JSON.stringify(this.user),
+                    headers: {
+                        'content-type': 'application/json',
+                        'Accept': 'application/json',
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        this.user.email = '';
+                        this.user.password = '';
+                        localStorage.setItem('user-token', data.data.token);// store the token in localstorage
+                        return localStorage.getItem('user-token');
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+
+            getUser() {
+                fetch(this.endpoint + 'users', {
+                    method: 'get',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('user-token'),
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        }
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+    h3 {
+        margin: 40px 0 0;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    a {
+        color: #42b983;
+    }
 </style>
