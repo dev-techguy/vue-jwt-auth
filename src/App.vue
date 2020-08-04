@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png" style="width: 100px;">
-        <Auth msg="Welcome to Your Vue.js App"/>
+        <Auth msg="Welcome to Your Vue.js App + JWT Bearer Token"/>
     </div>
 </template>
 

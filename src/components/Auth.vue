@@ -2,10 +2,11 @@
     <div class="row">
         <div class="col-md-2">&nbsp;</div>
         <div class="col-md-8">
-            <h2 class="text-center">{{ msg }}</h2>
+            <hr>
+            <h3 class="text-center">{{ msg }}</h3>
+            <hr>
             <form @submit.prevent="getAccessToken()" role="form">
-                <h4>Testing Bearer Token</h4>
-                <hr>
+                <h4>--- Testing Zone ---</h4>
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" placeholder="Enter E-mail Address" class="form-control"
