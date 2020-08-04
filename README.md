@@ -1,3 +1,5 @@
+<p align="center"><img src="https://i1.wp.com/blog.sqreen.com/wp-content/uploads/2018/01/Auth-in-Vue.js@2x.jpg?fit=1472%2C560&ssl=1" width="400"></p>
+
 # f-sheria
 
 ## Project setup
