@@ -1,17 +1,17 @@
 <template>
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png" style="width: 100px;">
-        <HelloWorld msg="Welcome to Your Vue.js App"/>
+        <Auth msg="Welcome to Your Vue.js App"/>
     </div>
 </template>
 
 <script>
-    import HelloWorld from './components/HelloWorld.vue'
+    import Auth from './components/Auth.vue'
 
     export default {
         name: 'App',
         components: {
-            HelloWorld
+            Auth
         }
     }
 </script>
@@ -26,5 +26,5 @@
         margin-top: 60px;
     }
 
-    @import'~bootstrap/dist/css/bootstrap.css';
+    @import '~bootstrap/dist/css/bootstrap.css';
 </style>
