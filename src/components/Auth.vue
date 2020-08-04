@@ -35,7 +35,7 @@
         },
         data() {
             return {
-                endpoint: 'http://b-sheria.dev-tooling.xyz/api/v1/',
+                endpoint: 'http://b-sheria.dev-tooling.xyz/api/v1/',// TODO set your endpoint url here
                 user: {
                     email: '',
                     password: ''
@@ -43,6 +43,11 @@
             }
         },
         methods: {
+            /**
+             * --------------------------
+             * Fetch the access token
+             * --------------------------
+             * */
             getAccessToken() {
                 fetch(this.endpoint + 'token', {
                     method: 'post',
@@ -64,6 +69,12 @@
                     })
             },
 
+            /**
+             * --------------------------------------------------
+             * Try getting the user who is authorized by the
+             * token you cached.
+             * -------------------------------------------------
+             * */
             getUser() {
                 fetch(this.endpoint + 'users', {
                     method: 'get',
