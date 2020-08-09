@@ -22,6 +22,17 @@
                 </div>
             </form>
             <a href="#" class="btn btn-outline-success btn-block mb-2" @click="getUser()"><b>GET USER</b></a>
+
+            <hr>
+            <h3 class="text-center">--- File ---</h3>
+            <form @submit.prevent="uploadCatalogue()" role="form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="catalogue">Upload Test</label>
+                    <input type="file" id="catalogue" placeholder="Upload Catalogue" class="form-control"
+                           v-on:change="catalogue" required>
+                </div>
+            </form>
+
         </div>
         <div class="col-md-2">&nbsp;</div>
     </div>
@@ -39,7 +50,8 @@
                 user: {
                     email: '',
                     password: ''
-                }
+                },
+                catalogue: ''
             }
         },
         methods: {
@@ -78,6 +90,29 @@
             getUser() {
                 fetch(this.endpoint + 'user', {
                     method: 'get',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('user-token'),
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+
+            /**
+             * ----------------------------
+             * Test upload of catalogue
+             * ----------------------------
+             * */
+            uploadCatalogue() {
+                fetch(this.endpoint + 'contacts', {
+                    method: 'post',
                     headers: {
                         'content-type': 'application/json',
                         'Accept': 'application/json',
