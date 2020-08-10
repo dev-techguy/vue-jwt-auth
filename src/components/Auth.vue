@@ -22,6 +22,7 @@
                 </div>
             </form>
             <a href="#" class="btn btn-outline-success btn-block mb-2" @click="getUser()"><b>GET USER</b></a>
+            <a href="#" class="btn btn-outline-success btn-block mb-2" @click="downloadReport()"><b>DOWNLOAD FINE</b></a>
 
             <hr>
             <h3 class="text-center">--- File ---</h3>
@@ -46,7 +47,7 @@
         },
         data() {
             return {
-                endpoint: 'http://b-sheria.dev-tooling.xyz/api/v1/',// TODO set your endpoint url here
+                endpoint: 'http://127.0.0.1:8000/api/v1/',// TODO set your endpoint url here
                 user: {
                     email: '',
                     password: ''
@@ -113,6 +114,30 @@
             uploadCatalogue() {
                 fetch(this.endpoint + 'contacts', {
                     method: 'post',
+                    headers: {
+                        'content-type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('user-token'),
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+
+            /**
+             * ----------------------------
+             * Test download of file
+             * @todo that is the report
+             * ----------------------------
+             * */
+            downloadReport() {
+                fetch(this.endpoint + 'dashboard/report', {
+                    method: 'get',
                     headers: {
                         'content-type': 'application/json',
                         'Accept': 'application/json',
